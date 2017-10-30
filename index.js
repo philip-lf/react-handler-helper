@@ -1,23 +1,8 @@
 let newState = {}
 
-export function helper(state, event) {
-    Object.keys(state).map(key => {
-        newState[key] = event.target.name === key ? event.target.value : state[key]
-    })
-}
-
-export default newState
-
-/////////////////////////////////////////////////
-
-import React, { Component } from 'react'
-
-let newState = {}
-
 // acts as a reducer
-// requires state object and event from each input
-export function helper(state, event) {
-    console.log(event.target.name, event.target.value)
+export function helper(event, state) {
+    console.log("helper function:", event.target.name, event.target.value)
     Object.keys(state).map(key => {
         newState[key] = event.target.name === key ? event.target.value : state[key]
     })
@@ -25,15 +10,14 @@ export function helper(state, event) {
 
 export default newState
 
-//get access to each input and select and places value & onChange attributes
-export function eachInput(document, state, setState) {
+export function eachInput(document, state) {
     let allInputs = Array.from(document.getElementsByTagName('input'))
     
-    allInputs.map(input => {
-        let nameAttribute = input.getAttribute('name') // "first"
-        input.setAttribute('value', state[nameAttribute]) // value={}
-        input.setAttribute('onChange','e => {helper(state, e); setState(newState)}') // onChange={}
-        console.log("dog", input)
+    allInputs.forEach(input => {
+        // capture name attribute
+        let nameAttribute = input.getAttribute('name')
+        // make and set value attribute with even.target.value
+        input.setAttribute('value', state[nameAttribute])
     })
 }
 
